@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const { log } = require("console");
 
 const app = express();
 
@@ -21,4 +22,8 @@ app.get("/login", function(req, res){
 
 app.get("/register", function(req, res){
     res.render("register");
+});
+
+app.listen(3000, function(){
+    console.log("Server started on port 3000");
 });
