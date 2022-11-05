@@ -55,6 +55,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        console.log(profile);
       return cb(err, user);
     });
   }
@@ -67,6 +68,13 @@ app.get("/", function(req, res){
 app.get("/auth/google",
     passport.authenticate("google", { scope: ['profile'] })
 );
+
+app.get("/auth/google/secrets", 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect secrets.
+    res.redirect("/secrets");
+  });
 
 app.get("/login", function(req, res){
     res.render("login");
